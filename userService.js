@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 //MONGO DB
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://marie:Rdm0LsnFudSUPuA7@cluster0.32yao.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Hanna:7b5aPGpz9fKtt1DA@cluster0.6b4xl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const dbClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var db;
 var userData;
 var sessions = {};
 dbClient.connect(err => {
     console.log("Connecting to User Service ...");
-    db = dbClient.db("moistureTracking");
+    db = dbClient.db("terrariumdaten");
     userData = db.collection("users");
 });
 //EXPRESS:
@@ -33,7 +33,7 @@ app.listen(port, () => {
 app.post('/api/register', (req, res) => {
     console.log("registering new user");
     let user = req.body;
-    console.log(user);
+    //console.log(user);
     user.createdAt = new Date();
     user.hashedPass = bcrypt.hashSync(user.password, saltRounds);
     delete user.password;
@@ -61,10 +61,11 @@ app.post('/api/register', (req, res) => {
     })
 })
 app.post('/api/login', (req, res) => {
-    console.log("logging in user");
+    console.log("logg in in user");
     let sentdata = req.body;
     userData.findOne({ username: sentdata.username })
         .then((dbres) => {
+          if (dbres) {
             console.log("found user");
             if (bcrypt.compareSync(sentdata.password, dbres.hashedPass)) {
                 console.log("login successful");
@@ -79,9 +80,20 @@ app.post('/api/login', (req, res) => {
                     token: token
                 });
             }
+            // Passwort Falsch
             else {
-                res.status(500);
+                res.status(500).send("ich hanna klug");
+                console.log("hallhallo")
             }
+            
+          }
+          // Username Falsch
+          else {
+            res.status(500).send ("hanna ist dumm");
+            console.log("ich bin marie")
+        }
+
+        
         })
 })
 function createSession(userData, token) {
