@@ -1,15 +1,19 @@
 const { v4: uuidv4 } = require('uuid');
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
 const saltRounds = 10;
 //MONGO DB
 const MongoClient = require('mongodb').MongoClient;
+
+// Hier Zugangsdaten für die Datenbank eintragen
 const uri = "mongodb+srv://Hanna:7b5aPGpz9fKtt1DA@cluster0.6b4xl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
 const dbClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var db;
 var userData;
 var sessions = {};
 dbClient.connect(err => {
     console.log("Connecting to User Service ...");
+    //Hier Name und collection der DB eingeben
     db = dbClient.db("terrariumdaten");
     userData = db.collection("users");
 });
