@@ -86,15 +86,15 @@ app.post('/api/login', (req, res) => {
             }
             // Passwort Falsch
             else {
-                res.status(500).send("ich hanna klug");
-                console.log("hallhallo")
+                res.status(500).send("PW falsch");
+                console.log("PW wrong")
             }
             
           }
           // Username Falsch
           else {
-            res.status(500).send ("hanna ist dumm");
-            console.log("ich bin marie")
+            res.status(500).send ("Username falsch");
+            console.log("Username wrong")
         }
 
         
