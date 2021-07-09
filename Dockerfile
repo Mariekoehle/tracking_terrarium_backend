@@ -16,10 +16,7 @@ RUN npm install
 COPY . .
 
 # Network / reverse proxy config
-LABEL traefik.http.routers.terrarium_backend.rule="Host(`terrarium.ds.ava.hfg.design`)"
-
-EXPOSE 3000
-CMD [ "node", "mqtt.js" ]
+LABEL traefik.http.routers.terrarium_userservice.rule="Host(`terrarium_userservice.ds.ava.hfg.design`)"
 
 EXPOSE 3001
 CMD [ "node", "userService.js" ]
